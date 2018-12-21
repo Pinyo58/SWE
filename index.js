@@ -84,3 +84,26 @@ app.get('/', (req, res) => {
     }
   });
 });
+
+// @route GET /image/:filename
+// @desc Display Image
+app.get('/image/:id', (req, res) => {
+  gfs.files.findOne({_id:ObjectId(req.params.id) }, (err, file) => {
+    if (err) throw err
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
+    // Check if image
+    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+      const readstream = gfs.createReadStream(file._id);
+      readstream.pipe(res);
+    } else {
+      res.status(404).json({
+        err: 'Not an image'
+      });
+    }
+  });
+});
