@@ -18,8 +18,6 @@ app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-app.get('/', (req, res) => res.render('test'));
-
 // Mongo URI
 const mongoURI = 'mongodb://trade:a00000@ds049486.mlab.com:49486/mongodbuploads';
 
@@ -66,3 +64,23 @@ const storage = new GridFsStorage({
 });
 
 const upload = multer({ storage });
+
+//@ index page
+app.get('/', (req, res) => {
+  gfs.files.find().toArray((err, files) => {
+    // Check if files
+    if (!files || files.length === 0) {
+      res.render('index', {files: false});
+    }else{
+      files.map(file =>{
+        if(file.contentType === 'image/jpeg' || file.contentType === 'image/png'){
+          file.isImage = true;
+        }else{
+          file.isImage = false;
+        }
+      });
+      //console.log(oid);
+      res.render('index', {files: files});
+    }
+  });
+});
