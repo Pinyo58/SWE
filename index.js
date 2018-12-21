@@ -10,7 +10,10 @@ const methodOverride = require('method-override');
 var ObjectId = require('objectid');
 var cookies = require('cookie-parser');
 var session = require('express-session');
+var config = require('./config');
+var cors = require('cors');
 const PORT = process.env.PORT || 5000;
+var User = require('./models/User');
 
 var app = express();
 
@@ -21,12 +24,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser());
 app.use(methodOverride('_method'));
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 app.set('view engine', 'ejs');
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 // Mongo URI
 const mongoURI = 'mongodb://trade:a00000@ds049486.mlab.com:49486/mongodbuploads';
 
+var loginService = require('./service - Copy')
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI);
 
@@ -70,6 +77,36 @@ const storage = new GridFsStorage({
 });
 
 const upload = multer({ storage });
+
+app.get('/login', function(req, res){
+  app.use(express.static(path.join(__dirname, 'views')));
+  res.sendFile(path.join(__dirname, 'views', 'login.html'));
+  // res.render('login');
+  loginService(app);
+});
+
+app.get('/register', (req, res) =>
+  {
+        app.use(bodyParser.json());
+            data={
+                username:req.query.username,
+                password:req.query.password,
+                confrimpassword:req.query.confrimpassword,
+                email:req.query.email
+
+            };
+            console.log(data); //-------------------------แปลงข้อมูลจาก String เป็น JSON
+            console.log(data.bodyParser);
+            conn.collection("user").insertOne(data, function(err, res) {
+              if (err) throw err;
+              console.log("1 document inserted");
+              conn.close();
+            });
+            res.redirect('/login');
+
+
+
+    })
 
 //@ index page
 app.get('/', (req, res) => {
@@ -129,6 +166,10 @@ app.get('/cart', function(req, res){
   console.log(money2money);
   money = {money:money2money};
   res.render('cart', {data2cart:data2cart, name2name:name2name, price2price:price2price, money:money});
+})
+
+app.get('/index', function(req, res){
+  res.render('login');
 })
 
 //Check out page

@@ -1,0 +1,1 @@
+var urlEndpoint = 'http://10.27.65.55';

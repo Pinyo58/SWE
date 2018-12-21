@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Signin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/signin.css" rel="stylesheet">
+    <script src="./js/lib/jquery-3.3.1.slim.min.js" ></script>
+    <script src="./js/lib/jquery.min.js" ></script>
+    <script src="./js/lib/popper.min.js"></script>
+    <script src="./js/lib/bootstrap.min.js"></script>
+    <script src="./js/config.js"></script>
+    <script src="./js/login.js"></script>
+  </head>
+
+  <body class="text-center">
+    <div id="demo" class="form-signin">
+	<form name="myForm">
+      <img class="mb-4" src="img/icondota.jpg" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input type="text" id="username" class="form-control" placeholder="Username" required autofocus>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="password" class="form-control" placeholder="Password" required>
+      <div class="checkbox mb-3">
+        <!-- <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label> -->
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit" id = "submit" onclick=login()>Sign in</button>
+      <li><a href="registers.html">register</a></li>
+	</form>
+    </div>
+	<script>
+        function login() {
+			var data = 'username='+document.getElementById("username").value.toString()+'&password='+document.getElementById("password").value.toString();
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/login", true);
+			      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send(data);
+			      xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+				callback(this);
+				}
+			};
+			callback(xhttp);
+        }
+		function callback(xhttp) {
+			document.getElementById("demo").innerHTML =
+			xhttp.responseText;
+		}
+    </script>
+  </body>
+</html>
