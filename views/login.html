@@ -43,7 +43,7 @@
         function login() {
 			var data = 'username='+document.getElementById("username").value.toString()+'&password='+document.getElementById("password").value.toString();
             var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "/login", true);
+            xhttp.open("POST", "/log", true);
 			      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send(data);
 			      xhttp.onreadystatechange = function() {

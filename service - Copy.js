@@ -24,7 +24,7 @@ module.exports = (function(app){
 		res.end("GET Method");
 	});
 
-    app.post('/login', function(req, res){
+    app.post('/log', function(req, res){
         console.log("username: "+req.body.username);
         console.log("password: "+req.body.password);
 
