@@ -13,7 +13,6 @@ var session = require('express-session');
 var config = require('./config');
 var cors = require('cors');
 const PORT = process.env.PORT || 5000;
-var User = require('./models/User');
 
 var app = express();
 
@@ -87,7 +86,6 @@ app.get('/login', function(req, res){
 
 app.get('/register', (req, res) =>
   {
-        app.use(bodyParser.json());
             data={
                 username:req.query.username,
                 password:req.query.password,

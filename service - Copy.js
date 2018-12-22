@@ -1,7 +1,6 @@
 var express = require('express');
 var MongoClient1 = require('mongoose');
 var body=require('body-parser');
-var User = require('./models/User');
 
 var app = express();
 
