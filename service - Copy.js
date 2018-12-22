@@ -16,10 +16,10 @@ app.use(body.json());
 
 app.use(body.urlencoded({extended: false}));
 module.exports = (function(app){
-	app.get('/', function(req, res){
+	/*app.get('/', function(req, res){
 		console.log("GET Method");
 		res.end("GET Method");
-	});
+	}); */
 
     app.post('/login', function(req, res){
         console.log("username: "+req.body.username);
