@@ -74,13 +74,13 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage });
 
-app.get('/register', (req, res) =>
+app.post('/register_data', (req, res) =>
   {
             data={
-                username:req.query.username,
-                password:req.query.password,
-                confrimpassword:req.query.confrimpassword,
-                email:req.query.email
+                username:req.body.username,
+                password:req.body.password,
+                confrimpassword:req.body.confrimpassword,
+                email:req.body.email
 
             };
             //console.log(data); //-------------------------แปลงข้อมูลจาก String เป็น JSON
@@ -417,6 +417,11 @@ app.post('/login_data', function(req, res){
               res.end("User incorrect");
           }
       });
+});
+
+app.get('/register', function(req, res){
+  res.render('register');
+
 });
 
 const port = 8000;
