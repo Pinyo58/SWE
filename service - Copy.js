@@ -15,7 +15,6 @@ var Database = MongoClient.connect(url, function(err , db)
     })
 app.use(body.json());
 
-app.use(body());
 
 app.use(body.urlencoded({extended: false}));
 module.exports = (function(app){
