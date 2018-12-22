@@ -167,7 +167,7 @@ app.get('/cart', function(req, res){
 })
 
 app.get('/index', function(req, res){
-  res.render('login');
+  res.render('CMlogin');
 })
 
 
