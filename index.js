@@ -170,10 +170,6 @@ app.get('/index', function(req, res){
   res.render('login');
 })
 
-//Check out page
-app.get('/checkout', function(req, res){
-  res.render('checkout');
-})
 
 //product-details
 app.get('/product', (req, res) => {
