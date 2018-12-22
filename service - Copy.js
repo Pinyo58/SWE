@@ -9,8 +9,8 @@ var url = 'mongodb://trade:a00000@ds049486.mlab.com:49486/mongodbuploads';
 
 var Database = MongoClient.connect(url, function(err , db)
     {
-            if(err) console.log("Error is connecting with mongodb.");
-            console.log("Connection success")
+        if(err) console.log("Error is connecting with mongodb.");
+            //console.log("Connection success")
 
     })
 app.use(body.json());
@@ -24,7 +24,7 @@ module.exports = (function(app){
 		res.end("GET Method");
 	});
 
-    app.post('/log', function(req, res){
+    app.post('/login', function(req, res){
         console.log("username: "+req.body.username);
         console.log("password: "+req.body.password);
 
@@ -37,13 +37,12 @@ module.exports = (function(app){
                 }else if(user.username === req.body.username && 
                     user.password === req.body.password)
                     {
-                        res.render('index');
+                        res.redirect('/index');
                 }else{
                     console.log("Credentials wrong");
                     res.end("Password incorrect");
                 }
             });
         });
-    //    loginService(app);
     });
 });

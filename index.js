@@ -100,9 +100,6 @@ app.get('/register', (req, res) =>
               conn.close();
             });
             res.redirect('/login');
-
-
-
     })
 
 //@ index page
