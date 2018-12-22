@@ -1,18 +1,16 @@
 var express = require('express');
-var MongoClient1 = require('mongoose');
 var body=require('body-parser');
+const mongoose = require('mongoose');
 
 var app = express();
+const mongoURI = 'mongodb://trade:a00000@ds049486.mlab.com:49486/mongodbuploads';
 
-var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://trade:a00000@ds049486.mlab.com:49486/mongodbuploads';
+// var loginService = require('./service - Copy')
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI);
 
-var Database = MongoClient.connect(url, function(err , db)
-    {
-        if(err) console.log("Error is connecting with mongodb.");
-            //console.log("Connection success")
-
-    })
+// var MongoClient = require('mongodb').MongoClient;
+// var url = 'mongodb://trade:a00000@ds049486.mlab.com:49486/mongodbuploads';
 app.use(body.json());
 
 
@@ -27,9 +25,7 @@ module.exports = (function(app){
         console.log("username: "+req.body.username);
         console.log("password: "+req.body.password);
 
-        MongoClient.connect(url, function(err, database){
-            const myDB = database.db('mongodbuploads');
-            myDB.collection('user').findOne({ username:req.body.username},
+            conn.collection('user').findOne({ username:req.body.username},
             function(err, user){
                 if(user == null){
                     res.end("User Invalid");
@@ -42,6 +38,5 @@ module.exports = (function(app){
                     res.end("Password incorrect");
                 }
             });
-        });
     });
 });
