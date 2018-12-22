@@ -23,13 +23,14 @@
 
   <body class="text-center">
     <div id="demo" class="form-signin">
-	<form name="myForm">
+	<form  method="POST" action="/login_data">
       <img class="mb-4" src="img/icondota.jpg" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="text" id="username" class="form-control" placeholder="Username" required autofocus>
+      <input type="text" id="username" class="form-control" placeholder="Username" name="username">
       <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="password" class="form-control" placeholder="Password" required>
+      <input type="password" id="password" class="form-control" placeholder="Password" name="password">
+      <button type="submit" value="SIGNIN"></button>
       <div class="checkbox mb-3">
         <!-- <label>
           <input type="checkbox" value="remember-me"> Remember me
@@ -39,24 +40,5 @@
       <a href="registers.html">register</a>
 	</form>
     </div>
-	<script>
-        function login() {
-			var data = 'username='+document.getElementById("username").value.toString()+'&password='+document.getElementById("password").value.toString();
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "/login", true);
-			      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send(data);
-			      xhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-				callback(this);
-				}
-			};
-			callback(xhttp);
-        }
-		function callback(xhttp) {
-			document.getElementById("demo").innerHTML =
-			xhttp.responseText;
-		}
-    </script>
   </body>
 </html>

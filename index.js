@@ -10,7 +10,6 @@ const methodOverride = require('method-override');
 var ObjectId = require('objectid');
 var cookies = require('cookie-parser');
 var session = require('express-session');
-var config = require('./config');
 var cors = require('cors');
 const PORT = process.env.PORT || 5000;
 
@@ -24,7 +23,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser());
 app.use(methodOverride('_method'));
 app.use(cors());
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.set('view engine', 'ejs');
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
@@ -32,7 +30,6 @@ app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 // Mongo URI
 const mongoURI = 'mongodb://trade:a00000@ds049486.mlab.com:49486/mongodbuploads';
 
-var loginService = require('./service - Copy')
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI);
 
@@ -77,12 +74,6 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage });
 
-app.get('/login', function(req, res){
-  app.use(express.static(path.join(__dirname, 'views')));
-  res.sendFile(path.join(__dirname, 'views', 'login.html'));
-  loginService(app);
-});
-
 app.get('/register', (req, res) =>
   {
             data={
@@ -92,8 +83,8 @@ app.get('/register', (req, res) =>
                 email:req.query.email
 
             };
-            console.log(data); //-------------------------แปลงข้อมูลจาก String เป็น JSON
-            console.log(data.bodyParser);
+            //console.log(data); //-------------------------แปลงข้อมูลจาก String เป็น JSON
+            //console.log(data.bodyParser);
             conn.collection("user").insertOne(data, function(err, res) {
               if (err) throw err;
               console.log("1 document inserted");
@@ -404,6 +395,28 @@ gfs.files.findOne({_id:ObjectId(req.params.id) }, (err, file) => {
     });
   }
 });
+});
+
+app.get('/login', function(req, res){
+  res.render('login');
+})
+app.post('/login_data', function(req, res){
+  console.log("username: "+req.body.username);
+  console.log("password: "+req.body.password);
+
+      conn.collection('user').findOne({ username:req.body.username},
+      function(err, user){
+          if(user == null){
+              res.end("User Invalid");
+          }else if(user.username === req.body.username && 
+              user.password === req.body.password)
+              {
+                  res.redirect('/');
+          }else{
+              console.log("Credentials wrong");
+              res.end("User incorrect");
+          }
+      });
 });
 
 const port = 8000;
