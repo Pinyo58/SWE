@@ -80,7 +80,6 @@ const upload = multer({ storage });
 app.get('/login', function(req, res){
   app.use(express.static(path.join(__dirname, 'views')));
   res.sendFile(path.join(__dirname, 'views', 'login.html'));
-  // res.render('login');
   loginService(app);
 });
 

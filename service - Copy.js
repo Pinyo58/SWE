@@ -37,7 +37,7 @@ module.exports = (function(app){
                 }else if(user.username === req.body.username && 
                     user.password === req.body.password)
                     {
-                        res.redirect('/index');
+                        res.redirect('/');
                 }else{
                     console.log("Credentials wrong");
                     res.end("Password incorrect");
